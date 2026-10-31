@@ -1,0 +1,20 @@
+id,trigger,conditions,script,text,options,notes
+"#RULESET_NAME PNRAS",,,,,,
+,,,,,,
+# Salvage,,,,,,
+pnras_sal_defenders,DialogOptionSelected,"$option == salExplorePNRAS
+$hasDefenders","FireBest TriggerAutomatedDefenses",,,
+pnras_sal_noDefenders,DialogOptionSelected,"$option == salExplorePNRASold","FireBest PNRASCheckSalvageSpecial","pnras_sal_noDefenders RAN",,
+pnras_sal_forceRecoveryOpt,PopulateSalvageOptions2,"PNRASAutomatedRecovery canBeMadeRecoverable","SetStoryColor salMakeRecoverablePNRAS","pnras_sal_forceRecoveryOpt RAN","10:salMakeRecoverablePNRAS:Consider whether special measures might be taken to recover this ship",
+pnras_sal_forceRecoveryOptNotNow,DialogOptionSelected,"$option == not_now score:1000","SetStoryColor salMakeRecoverablePNRAS","pnras_sal_forceRecoveryOptNotNow RAN","10:salMakeRecoverablePNRAS:Consider whether special measures might be taken to recover this ship",
+pnras_sal_forceRecoveryOptSel1,DialogOptionSelected,"$option == salExplorePNRAS","PNRASAutomatedRecovery showRecoverable
+FireBest PNRASCheckSalvageSpecial","pnras_sal_forceRecoveryOptSel1 RAN",,
+pnras_sal_forceRecoveryOptSel2,DialogOptionSelected,"$option == salMakeRecoverablePNRAS","PNRASAutomatedRecovery showRecoverable
+FireBest PNRASCheckSalvageSpecial","pnras_sal_forceRecoveryOptSel2 RAN",,
+pnras_sal_checkSpecialFound,PNRASCheckSalvageSpecial,"$salvageSpecialData != null","ShowDefaultVisual
+SalvageSpecialInteraction","pnras_sal_checkSpecialFound RAN",,
+pnras_sal_checkSpecialNoneFound,PNRASCheckSalvageSpecial,,"ShowDefaultVisual
+FireBest BeginSalvage","pnras_sal_checkSpecialNoneFound RAN",,
+test,PopulateSalvageOptions2,"$salvageSpecialData != null","SetStoryColor salMakeRecoverablePNRAS","test ran","10:salMakeRecoverablePNRAS:Consider whether special measures might be taken to recover this ship",
+"#END Salvage",,,,,,
+
