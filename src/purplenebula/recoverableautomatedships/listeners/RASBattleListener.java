@@ -14,6 +14,7 @@ import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial;
 import com.fs.starfarer.api.util.Misc;
+import lunalib.lunaSettings.LunaSettings;
 import org.lazywizard.console.Console;
 import org.lwjgl.input.Keyboard;
 
@@ -124,6 +125,8 @@ public class RASBattleListener implements CampaignEventListener {
     @Override
     public void reportShownInteractionDialog(InteractionDialogAPI dialog) {
 
+        if (Boolean.TRUE.equals(LunaSettings.getBoolean("PN_RecoverableAutomatedShips","pnras_enableDerelictRecoveryBoolean"))) {
+
 //import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin;
 //        SectorEntityToken interactionTarget = Global.getSector().getCampaignUI().getCurrentInteractionDialog().getInteractionTarget();
 //        boolean isDerelictShipEntityPlugin = interactionTarget.getCustomPlugin() instanceof DerelictShipEntityPlugin;
@@ -136,33 +139,37 @@ public class RASBattleListener implements CampaignEventListener {
 //            Console.showMessage(variant.getHullSpec().getTags());
 //        }
 
-        SectorEntityToken target = dialog.getInteractionTarget();
-        if (target == null) return;
+            SectorEntityToken target = dialog.getInteractionTarget();
+            if (target == null) return;
 
 
-        boolean isDerelictShipEntityPlugin = target.getCustomPlugin() instanceof DerelictShipEntityPlugin;
-        String defaultName = target.getCustomEntitySpec().getDefaultName();
-        boolean isDerelictShip = defaultName.equals("Derelict Ship");
+            boolean isDerelictShipEntityPlugin = target.getCustomPlugin() instanceof DerelictShipEntityPlugin;
+            if (target.getCustomEntitySpec() == null) return;
+            String defaultName = target.getCustomEntitySpec().getDefaultName();
+            boolean isDerelictShip = defaultName.equals("Derelict Ship");
 
-        if (isDerelictShipEntityPlugin && isDerelictShip) {
+            if (isDerelictShipEntityPlugin && isDerelictShip) {
 
-            // Grab DSE Plugin
-            DerelictShipEntityPlugin plugin = (DerelictShipEntityPlugin) target.getCustomPlugin();
-            // Check for NULL values
-            if (plugin.getData() == null && plugin.getData().ship == null) return;
-            // Grab variant of derelict
-            ShipVariantAPI variant = plugin.getData().ship.getVariant();
-            // Check if variant's hullspec's tags contains a certain tag
-            if (!variant.getHullSpec().getTags().contains(Tags.AUTOMATED_RECOVERABLE)) return;
+                // Grab DSE Plugin
+                DerelictShipEntityPlugin plugin = (DerelictShipEntityPlugin) target.getCustomPlugin();
+                // Check for NULL values
+                if (plugin.getData() == null) return;
+                if (plugin.getData().ship == null) return;
+                // Grab variant of derelict
+                ShipVariantAPI variant = plugin.getData().ship.getVariant();
+                // Check if variant's hullspec's tags contains a certain tag
+                if (!variant.getHullSpec().getTags().contains(Tags.AUTOMATED_RECOVERABLE)) return;
 
-            Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);
-            if (canBeMadeRecoverable(target)) {
-                showRecoverable(target);
-                dialog.getOptionPanel().clearOptions();
-                dialog.getOptionPanel().addOption("Explore (PNRAS)","salExplorePNRAS");
+                Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);
+                if (canBeMadeRecoverable(target)) {
+                    showRecoverable(target);
+                    dialog.getOptionPanel().clearOptions();
+                    dialog.getOptionPanel().addOption("Explore (PNRAS)","salExplorePNRAS");
 //                dialog.getOptionPanel().addOption("Explore (normal)","salExplore");
-                dialog.getOptionPanel().addOption("Leave","defaultLeave");
-                dialog.getOptionPanel().setShortcut("defaultLeave", Keyboard.KEY_ESCAPE, false, false, false, true);
+                    dialog.getOptionPanel().addOption("Leave","defaultLeave");
+                    dialog.getOptionPanel().setShortcut("defaultLeave", Keyboard.KEY_ESCAPE, false, false, false, true);
+
+                }
 
             }
 
