@@ -10,6 +10,10 @@ which does have a LunaSetting to disable the feature in case of UI/dialog bugs.
 
 **NOTE:** This does not allow you to field them in combat as well, for that you still need the skill.
 
+## Is it save-compatible?
+In testing I've had no problem adding or removing the mod mid-save, but as always I suggest making a backup
+of your save when adding mods mid-save.
+
 ## Why was this made?
 I've seen a multitude of people wonder why we cannot recover automated ships before being able to field them in combat.
 They feel/felt like you should be able to recover them after fighting them in combat as to not lose out on obtaining any.
