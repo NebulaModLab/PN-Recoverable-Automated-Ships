@@ -19,6 +19,9 @@ I've seen a multitude of people wonder why we cannot recover automated ships bef
 They feel/felt like you should be able to recover them after fighting them in combat as to not lose out on obtaining any.
 And since I saw that as a good enough reason to make it happen, I decided to make this small mod!
 
+## AI use disclaimer
+No AI was used in the creation of this mod's code or graphical assets
+
 ## Credits
 Fractal Softworks - The amazing team behind our beloved game Starsector  
 ZaHandoButAHunter - Came with the idea for this mod and helped with testing
