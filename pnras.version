@@ -1,12 +1,12 @@
 {
-    "masterVersionFile":"",
+    "masterVersionFile":"https://raw.githubusercontent.com/NebulaModLab/PN_RecoverableAutomatedShips/refs/heads/main/pnras.version",
     "modName":"Recoverable Automated Ships",
-    "directDownloadURL":"https://github.com/NebulaModLab/PN_RecoverableAutomatedShips/releases/latest/download/PN_RecoverableAutomatedShips.zip",
-    "modThreadId":0,
+    "directDownloadURL":"https://github.com/NebulaModLab/PN_RecoverableAutomatedShips/releases/latest/download/PN-RecoverableAutomatedShips.zip",
+    "modThreadId":36240,
     "modVersion":
     {
         "major":1,
         "minor":0,
         "patch":0
-     }
+    }
 }
